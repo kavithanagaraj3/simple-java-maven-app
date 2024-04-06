@@ -1,9 +1,11 @@
 pipeline {
-    agent any 
+    agent any
+    options {
+        skipStagesAfterUnstable()
+    }
     stages {
         stage('Build') {
             steps {
-                sh 'sudo apt-get update && sudo -x apt-get install -y maven'
                 sh 'mvn -B -DskipTests clean package'
             }
         }
@@ -17,9 +19,9 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') {
+        stage('Deliver') { 
             steps {
-                sh './jenkins/scripts/deliver.sh'
+                sh './jenkins/scripts/deliver.sh' 
             }
         }
     }
